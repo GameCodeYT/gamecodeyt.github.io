@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GameCodeYT — Test Web</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+  <style>
+    body { background:#0b0710; color:white; margin:0; font-family:Arial; text-align:center; padding-top:120px; }
+    h1 { opacity:0; font-size:2.8rem; }
+    p { color:#ccc; }
+  </style>
+</head>
+<body>
+  <h1 id="titulo">Página funcionando ✔️</h1>
+  <p>Si estás viendo esto, Nginx está sirviendo bien tu archivo.</p>
+
+  <script>
+    anime({
+      targets:'#titulo',
+      opacity:[0,1],
+      translateY:[-20,0],
+      duration:900,
+      easing:'easeOutExpo'
+    });
+  </script>
+</body>
+</html>
