@@ -1,153 +1,207 @@
-sudo tee /var/www/html/index.html > /dev/null <<'HTML'
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tiziano — Developer & Creator</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background:#0a0a0f;color:#fff;overflow-x:hidden;}
-::-webkit-scrollbar{width:8px;}::-webkit-scrollbar-thumb{background:#6d00ff;border-radius:4px;}
-body::before{
-content:"";
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:url('https://i.imgur.com/DKHl9Ko.jpeg') center/cover no-repeat;
-filter:brightness(0.35) blur(2px);
-z-index:-2;
-}
-body::after{
-content:"";
-position:fixed;top:0;left:0;width:100%;height:100%;
-background:radial-gradient(circle at center,#6d00ff33 0%,#000000aa 70%);
-z-index:-1;
-}
-#sidebar{
-position:fixed;top:0;left:0;width:80px;height:100%;
-background:#0d001a88;border-right:1px solid #6d00ff66;
-backdrop-filter:blur(5px);display:flex;flex-direction:column;
-align-items:center;padding-top:40px;transition:.3s;
-}
-#sidebar:hover{width:240px;}
-#sidebar h1{opacity:0;font-size:22px;margin-bottom:30px;transition:.3s;}
-#sidebar:hover h1{opacity:1;}
-.nav-btn{width:100%;padding:18px 10px;text-align:center;color:#fff;
-cursor:pointer;border-bottom:1px solid #6d00ff22;transition:.3s;}
-.nav-btn:hover{background:#6d00ff33;}
-section{min-height:100vh;padding:80px 50px 80px 140px;opacity:0;
-transform:translateY(40px);transition:1s;}
-.show{opacity:1;transform:translateY(0);}
-h2{font-size:40px;margin-bottom:15px;text-shadow:0 0 10px #6d00ff;}
-p{max-width:700px;font-size:18px;line-height:1.7;margin-bottom:20px;}
-.project{background:#160026cc;border:1px solid #6d00ff66;
-padding:20px;margin:20px 0;border-radius:12px;backdrop-filter:blur(4px);
-box-shadow:0 0 20px #6d00ff44;transition:.3s;}
-.project:hover{transform:scale(1.03);}
-#chatbox{
-position:fixed;right:20px;bottom:20px;width:300px;
-background:#160026dd;border:1px solid #6d00ff88;border-radius:12px;
-padding:15px;backdrop-filter:blur(6px);box-shadow:0 0 20px #6d00ff55;
-}
-#chatbox input{width:100%;padding:10px;border:none;border-radius:8px;margin-top:10px;}
-#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LimitedBreaker — ULTRA PRO Deluxe</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
 </head>
 <body>
 
-<div id="particles"></div>
+  <!-- PRELOADER -->
+  <div id="preloader" aria-hidden="true">
+    <div class="pre-bar"></div>
+    <div class="pre-title">LIMITEDBREAKER</div>
+  </div>
 
-<div id="sidebar">
-<h1>Tiziano</h1>
-<div class="nav-btn" onclick="scrollToSec('home')">Inicio</div>
-<div class="nav-btn" onclick="scrollToSec('about')">Sobre mí</div>
-<div class="nav-btn" onclick="scrollToSec('projects')">Proyectos</div>
-<div class="nav-btn" onclick="scrollToSec('contact')">Contacto</div>
-</div>
+  <!-- HACKER MODE (optional, toggle in UI) -->
+  <div id="hackerOverlay" class="hacker-overlay" aria-hidden="true">
+    <div class="terminal">
+      <div class="term-top">
+        <div class="term-dots"><span></span><span></span><span></span></div>
+        <div class="term-title">limitedbreaker@local</div>
+        <button id="closeHacker" class="term-close">✕</button>
+      </div>
+      <div id="termContent" class="term-content"><pre>$ connecting...</pre></div>
+    </div>
+  </div>
 
-<section id="home">
-<h2>Bienvenido a mi mundo</h2>
-<p>Soy <b>Tiziano</b>, un desarrollador y creador enfocado en experiencias digitales
-con estilo futurista, interactividad y estética anime cyberpunk.</p>
-</section>
+  <!-- CUSTOM CURSOR -->
+  <div id="cursor" aria-hidden="true"></div>
 
-<section id="about">
-<h2>Sobre mí</h2>
-<p>Soy un desarrollador apasionado por construir herramientas, bots y experiencias
-visuales con un toque futurista. Me encanta combinar estética neon, tecnología,
-animaciones y diseño limpio. Trabajo creando interfaces intuitivas, bots funcionales
-y proyectos que mezclan creatividad con desarrollo. Constantemente busco aprender,
-mejorar y llevar mis ideas a un estilo único inspirado en mundos urbanos tipo anime
-y vibes cyberpunk.</p>
-<p>Mi objetivo es seguir creando herramientas útiles, webs modernas y proyectos que
-no solo funcionen bien, sino que también luzcan increíbles.</p>
-</section>
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">LB</div>
+        <div class="brand-name">LimitedBreaker</div>
+      </div>
 
-<section id="projects">
-<h2>Mis Bots</h2>
+      <nav class="nav-links">
+        <a class="nav-link" href="#hero">Inicio</a>
+        <a class="nav-link" href="#bots">Bots</a>
+        <a class="nav-link" href="#tech">Tecnologías</a>
+        <a class="nav-link" href="#sobre">Sobre</a>
+        <a class="nav-link" href="#contacto">Contacto</a>
+        <button id="hackerBtn" class="hacker-btn" title="Modo Hacker">⌘</button>
+      </nav>
+    </div>
+  </header>
 
-<div class="project">
-<h3>Elder AutomatonBot1</h3>
-<p>Un bot diseñado para automatizar tareas en Discord con funciones avanzadas.</p>
-<img src="https://i.imgur.com/rS0BtQm.png" width="200">
-</div>
+  <!-- HERO -->
+  <section id="hero" class="hero panel">
+    <canvas id="bgCanvas" aria-hidden="true"></canvas>
+    <div class="hero-overlay"></div>
 
-<div class="project">
-<h3>Elder AutomatonV2</h3>
-<p>La versión mejorada con sistema modular, nuevas funciones y mayor estabilidad.</p>
-<img src="https://i.imgur.com/pCx1Kjl.png" width="200">
-</div>
+    <div class="hero-inner">
+      <h1 class="title">Tiziano — <span>Developer & Creator</span></h1>
+      <p class="subtitle">Bots de protección y automatización profesional • Elder Automaton</p>
 
-</section>
+      <div class="hero-ctas">
+        <button class="btn primary" data-target="#bots">Ver Bots</button>
+        <button class="btn outline" data-target="#contacto">Contactar</button>
+      </div>
 
-<section id="contact">
-<h2>Contacto</h2>
-<p>Puedes contactarme próximamente mediante un formulario o directamente en mis redes.</p>
-</section>
+      <div class="hero-stats">
+        <div class="stat"><span class="count" data-target="2">0</span><small>Proyectos</small></div>
+        <div class="stat"><span class="count" data-target="1500">0</span><small>Horas</small></div>
+        <div class="stat"><span class="count" data-target="24">0</span><small/>Soporte</small></div>
+      </div>
+    </div>
+  </section>
 
-<div id="chatbox">
-<b>Chat rápido</b>
-<input placeholder="Escribe un mensaje...">
-</div>
+  <!-- BOTS -->
+  <section id="bots" class="panel section">
+    <div class="section-head">
+      <h2>Mis Bots</h2>
+      <p class="muted">Privados • Moderación • Prevención • Automatización</p>
+    </div>
 
-<script>
-const sections=document.querySelectorAll("section");
-function showOnScroll(){
-sections.forEach(s=>{
-const rect=s.getBoundingClientRect();
-if(rect.top<window.innerHeight-100){s.classList.add("show");}
-});
-}
-window.addEventListener("scroll",showOnScroll);
-showOnScroll();
+    <div class="cards">
+      <article class="card bot-card" data-bot="bot1">
+        <div class="card-media">
+          <img src="elderautomaton.png" alt="Elder Automaton">
+          <div class="glow"></div>
+        </div>
+        <div class="card-body">
+          <h3>Elder Automaton</h3>
+          <p class="muted small">Protección, anti-raid y moderación avanzada.</p>
+          <div class="card-actions">
+            <button class="btn primary" onclick="openBot('bot1')">Más info</button>
+            <button class="btn ghost" onclick="openBot('bot1')">Usar</button>
+          </div>
+        </div>
+      </article>
 
-function scrollToSec(id){document.getElementById(id).scrollIntoView({behavior:"smooth"});}
+      <article class="card bot-card" data-bot="bot2">
+        <div class="card-media">
+          <img src="elderautomatonv2.png" alt="Elder Automaton V2">
+          <div class="glow"></div>
+        </div>
+        <div class="card-body">
+          <h3>Elder Automaton V2</h3>
+          <p class="muted small">Detección avanzada y respuesta inmediata.</p>
+          <div class="card-actions">
+            <button class="btn primary" onclick="openBot('bot2')">Más info</button>
+            <button class="btn ghost" onclick="openBot('bot2')">Usar</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
 
-const canvas=document.createElement("canvas");
-canvas.width=innerWidth;canvas.height=innerHeight;canvas.id="particles";
-document.body.appendChild(canvas);
-const ctx=canvas.getContext("2d");
-let arr=[];
-for(let i=0;i<80;i++){
-arr.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,s:1+Math.random()*3,dx:(Math.random()-.5)*1.2,dy:(Math.random()-.5)*1.2});
-}
-function animate(){
-ctx.clearRect(0,0,innerWidth,innerHeight);
-arr.forEach(p=>{
-ctx.fillStyle="#6d00ff";
-ctx.shadowBlur=20;
-ctx.shadowColor="#6d00ff";
-ctx.beginPath();ctx.arc(p.x,p.y,p.s,0,Math.PI*2);ctx.fill();
-p.x+=p.dx;p.y+=p.dy;
-if(p.x<0||p.x>innerWidth)p.dx*=-1;
-if(p.y<0||p.y>innerHeight)p.dy*=-1;
-});
-requestAnimationFrame(animate);
-}
-animate();
-</script>
+  <!-- TECHNOLOGIES -->
+  <section id="tech" class="panel alt section">
+    <div class="section-head">
+      <h2>Tecnologías</h2>
+      <p class="muted">Herramientas que uso día a día</p>
+    </div>
+
+    <div class="tech-grid">
+      <div class="tech"><i class="fab fa-node-js"></i><span>Node.js</span></div>
+      <div class="tech"><i class="fab fa-js"></i><span>JavaScript</span></div>
+      <div class="tech"><i class="fas fa-database"></i><span>MongoDB</span></div>
+      <div class="tech"><i class="fab fa-github"></i><span>GitHub</span></div>
+      <div class="tech"><i class="fas fa-server"></i><span>VPS</span></div>
+      <div class="tech"><i class="fab fa-html5"></i><span>HTML / CSS</span></div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre" class="panel section">
+    <div class="section-head">
+      <h2>Sobre mí</h2>
+      <p class="muted">Tiziano — estudiante SMR, creador de bots y automatizaciones privadas.</p>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Soy desarrollador enfocado en seguridad de comunidades, automatización y mejoras operativas. Trabajo con Node.js y despliegues controlados.</p>
+        <p class="muted">Proyectos: Elder Automaton, Elder AutomatonV2 — privados.</p>
+      </div>
+
+      <aside class="about-meta">
+        <div class="meta-card">
+          <h4>Contacto rápido</h4>
+          <p><strong>Discord:</strong> limitedbreaker</p>
+          <p><strong>GitHub:</strong> <a href="https://github.com/GameCodeYT" target="_blank">GameCodeYT</a></p>
+          <p><strong>Emails:</strong><br>tb.scattaregia@gmail.com<br>tb.scattaregia@outlook.com</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contacto" class="panel section">
+    <div class="section-head">
+      <h2>Contacto</h2>
+      <p class="muted">¿Tienes un proyecto? Escríbeme.</p>
+    </div>
+
+    <form id="contactForm" class="contact-form" onsubmit="return false;">
+      <input name="name" placeholder="Tu nombre" required>
+      <input name="email" type="email" placeholder="Tu correo" required>
+      <textarea name="message" rows="5" placeholder="Mensaje..." required></textarea>
+      <div class="form-actions">
+        <button id="sendBtn" class="btn primary" type="submit">Enviar mensaje</button>
+        <button class="btn ghost" type="reset">Borrar</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="panel alt section">
+    <div class="section-head">
+      <h2>Respuestas Rápidas</h2>
+    </div>
+
+    <div class="faq-grid">
+      <details><summary>¿Tus bots son privados?</summary><p>Sí, están hechos especialmente para uso personal en servidores privados de Discord.</p></details>
+      <details><summary>¿Aceptas encargos?</summary><p>No. Todos estos proyectos los desarrollo por pasión, no por dinero.</p></details>
+      <details><summary>¿Qué tecnologías usas?</summary><p>Node.js, Discord.js, JavaScript (JS) y VPS.</p></details>
+      <details><summary>¿Soporte y mantenimiento?</summary><p>Sí, pero solo para mis propios proyectos.</p></details>
+      <details><summary>¿Pueden manejar mucha carga?</summary><p>Sí, están diseñados para operar en servidores grandes y gestionar alta concurrencia.</p></details>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="panel-footer">
+    <div>© <span id="year"></span> LimitedBreaker — Hecho con ♥</div>
+  </footer>
+
+  <!-- BOT MODAL -->
+  <div id="botModal" class="modal" aria-hidden="true">
+    <div class="modal-inner">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div id="modalContent" class="modal-content"></div>
+    </div>
+  </div>
 
 </body>
 </html>
-HTML
